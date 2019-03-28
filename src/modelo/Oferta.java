@@ -2,6 +2,8 @@ package modelo;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 public class Oferta extends Categoria {
 	
 	private Float precio;
@@ -21,8 +23,11 @@ public class Oferta extends Categoria {
 	 * TODO
 	 * @return
 	 */
-	public String mostrarOferta() {
-		return "{precio:"+precio+","+ super.mostrarCategoria() + "}";
+	public JSONObject mostrarOferta() {
+		JSONObject oferta = new JSONObject();
+		oferta.put("informacion", super.mostrarCategoria());
+		oferta.put("precio", precio);
+		return oferta;
 	}
 
 }

@@ -3,6 +3,9 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * 
  * @author edgar
@@ -44,13 +47,15 @@ public class Establecimiento {
 	 */
 	public void mostrarCarta() {
 		// inicializar vista de la carta y pasarle el String JSON lista de categoria para que lo muestre 
-		String cartaJSON ="{[";
+		JSONArray arrayCat = new JSONArray();
 		for(Categoria c : carta) {
-			cartaJSON += c.mostrarCategoria();
-			cartaJSON += ",";
+			arrayCat.put(c.mostrarCategoria());
 		}
-		// eliminar ultima coma TODO
-		cartaJSON +="]}";
+		
+		JSONObject carta = new JSONObject();
+		carta.put("carta", arrayCat);
+		System.out.println(carta.toString(4));
+		 
 		
 		/**
 		 * TODO integration
@@ -61,17 +66,23 @@ public class Establecimiento {
 	 * TODO
 	 */
 	public void mostrarEstablecimiento() {
-		// inicializar vista del establecimiento y pasarle (nombre, descripción, mail, tipo, barrio y Lista ofertas) para que lo muestre
-		String establecimientoJSON ="{nombre:"+nombre_Bar+", descripion:"+descripcion+",ofertas:[";
+		JSONObject establecimiento = new JSONObject();
+		establecimiento.put("nombre", nombre_Bar);
+		establecimiento.put("descripion", descripcion);
+		establecimiento.put("mail", mail);
+		establecimiento.put("tipo", tipo);
+		establecimiento.put("barrio", barrio);
+		
+		JSONArray arrayOfer = new JSONArray();
 		for(Oferta o : ofertas) {
-			establecimientoJSON += o.mostrarCategoria();
-			establecimientoJSON += ",";
+			arrayOfer.put(o.mostrarOferta());
 		}
-		// eliminar ultima coma TODO
-		establecimientoJSON +="]}";
+		
+		establecimiento.put("ofertas", arrayOfer);
+		System.out.println(establecimiento.toString(4));
 		 
 		/**
-		 * TODO integration
+		 * TODO integration 
 		 */
 	}
 	
@@ -92,7 +103,7 @@ public class Establecimiento {
 			}
 		}
 		// add an item to product selection
-		Picotea.getInstance().anadirCarro(catTofind.anadirCarrito(nombreItem));
+		Resumen.getInstance().anadirProducto(catTofind.searchItem(nombreItem));
 	}
 	
 	/**
@@ -112,7 +123,7 @@ public class Establecimiento {
 			}
 		}
 		// add an item to product selection
-		Picotea.getInstance().anadirCarro(theOffer);
+		Resumen.getInstance().anadirOferta(theOffer);
 	}
 	
 	

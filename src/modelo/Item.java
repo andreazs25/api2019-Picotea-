@@ -1,5 +1,7 @@
 package modelo;
 
+import org.json.JSONObject;
+
 public class Item {
 	
 	private String nombre;
@@ -10,7 +12,7 @@ public class Item {
 	 * @param nombre
 	 * @param Precio
 	 */
-	public Item (String nombre,Float Precio) {
+	public Item (String nombre,Float precio) {
 		this.nombre=nombre;
 		this.precio=precio;
 	}
@@ -19,8 +21,11 @@ public class Item {
 	 * TODO
 	 * @return
 	 */
-	public String mostrarItem() {
-		return "{nombre:"+nombre+",precio:"+precio+"}";
+	public JSONObject mostrarItem() {
+		JSONObject item = new JSONObject();
+		item.put("name", nombre);
+		item.put("precio", precio);
+		return item;
 	}
 	
 	/**

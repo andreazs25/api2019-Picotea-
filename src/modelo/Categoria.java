@@ -3,6 +3,9 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Categoria {
 	
 	private String nombre;
@@ -22,16 +25,17 @@ public class Categoria {
 	 * TODO
 	 * @return
 	 */
-	public String mostrarCategoria() {
-		String result = "{nombre:" + nombre +", items: [";
+	public JSONObject mostrarCategoria() {
+		JSONObject categoria = new JSONObject();
+		categoria.put("nombre", nombre);
+		JSONArray arr = new JSONArray();
 		for(Item i:productos) {
-			String item = i.mostrarItem();
-			result += item;
-			result += ",";
+			JSONObject item = i.mostrarItem();
+			arr.put(item);
 		}
 		// eliminar ultima coma TODO
-		result += "]}";
-		return result;
+		categoria.put("items", arr);
+		return categoria;
 	}
 	
 	/**
@@ -39,7 +43,7 @@ public class Categoria {
 	 * @param nombre
 	 * @return
 	 */
-	public Item anadirCarrito(String nombre) {
+	public Item searchItem(String nombre) {
 		Boolean enc=false;
 		Iterator<Item> it = productos.iterator();
 		Item result= null;
